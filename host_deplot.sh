@@ -36,7 +36,7 @@ echo "      routes:" >> ~/99-custom.yaml
 echo "       - to: default" >> ~/99-custom.yaml
 echo "         via: $GATEWAY_ADDRESS" >> ~/99-custom.yaml
 echo "      nameservers:" >> ~/99-custom.yaml
-echo "        addresses: [$PRIMARY_DNS_ADDRESS, $SECONDARY_DNS_ADDRESS, 10.248.2.1, 10.45.15.7]" >> ~/99-custom.yaml
+echo "        addresses: [$PRIMARY_DNS_ADDRESS, $SECONDARY_DNS_ADDRESS, , ]" >> ~/99-custom.yaml
 echo "  version: 2" >> ~/99-custom.yaml
 
 #Copy the custom config to the netplan folder and apply
