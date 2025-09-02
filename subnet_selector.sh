@@ -1,7 +1,7 @@
 #!/bin/bash
 
-SNET23="/hostdeploy24.sh"
-SNET22="/hostdeploy23.sh"
+SNET24="/hostdeploy24.sh"
+SNET23="/hostdeploy23.sh"
 
 while true; do
     echo "Network Config Selector"
