@@ -1,17 +1,17 @@
 #!/bin/bash
 
-SNET23="/hostdeploy2.sh"
-SNET22="/hostdeploy22.sh"
+SNET23="/hostdeploy24.sh"
+SNET22="/hostdeploy23.sh"
 
 while true; do
     echo "Network Config Selector"
-    echo "1) Select /22 network"
+    echo "1) Select /24 network"
     echo "2) Select /23 network" 
     echo "3) Exit"
     read -p "Select the number asscociated with your choice and press enter. " choice
     
     case $choice in
-        1) [ -x "$SNET22" ] && "$SNET22" || echo "Error: $SCRIPT1 not found/executable" ;; #Tests if the file path SNET22 exists AND is executable. 
+        1) [ -x "$SNET24" ] && "$SNET24" || echo "Error: $SCRIPT1 not found/executable" ;; #Tests if the file path SNET22 exists AND is executable. 
         2) [ -x "$SNET23" ] && "$SNET23" || echo "Error: $SCRIPT2 not found/executable" ;; #Tests if the file path SNET23 exists AND is executable. 
         3) exit 0 ;;
         *) echo "Invalid choice" ;;
