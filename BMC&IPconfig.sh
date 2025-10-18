@@ -1,5 +1,10 @@
 ENVIRONMENT=${1:-dev}
 INTERFACE=$(ls /sys/class/net/ | grep -v lo | head -1)
+#INTERFACE=$(ip -o link show | awk 'NR++2 {print $2}' | sed 's/://') # Specifically skip lo interface
+#INTERFACE=$(ls /sys/class/net/ | awk 'NR==2')
+#INTERFACE=$(ls /sys/class/net/ | grep -v lo | head -1) 
+#INTERFACE=$(ls /sys/class/net/ | sort | grep -v lo | head -1) 
+
 USERNAME="admin"
 
 # Takes user input of the BMC and LAN IP addresses. 
