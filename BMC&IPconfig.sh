@@ -129,7 +129,24 @@ else
     echo "Skipping .yaml display"
 fi
 
+echo "export http_proxy="http://proxy-site.company.com:port" >> ~/.bashrc
+echo "export https_proxy="https://proxy-site.company.com:port" >> ~/.bashrc
+echo "export no_proxy=localhost,127.0.0.1"' >> ~/.bashrc
+source ~/.bashrc
 
+#View the new proxy settings. 
+env | grep -i proxy
+read -p "Running client node setup (Press ENTER)."
+read -p "Enter Date: (YYYY-MM-DD HH:MM)" datetime
+sudo date -s "$datetime"
+sudo timedatectl set-ntp true
+date
+
+sudo apt update
+sudo apt install openssh-server -y
+sudo ufw disable
+# Check if SSH is running
+systemctl status ssh
 
 #Print the completion of the configuration script
 if [[ $LAN_IP == 10.*.*.* ]]; then
