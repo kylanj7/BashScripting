@@ -1,5 +1,18 @@
 #!/bin/bash
 
+# Run this in windows if using Windows develipment environment:
+# (Get-Content script.sh -Raw) -replace "`r`n", "`n" | Set-Content script.sh -NoNewline
+
+# Method 2: Using .NET StreamWriter for precise control
+$content = Get-Content script.sh -Raw
+[System.IO.File]::WriteAllText("script.sh", $content, [System.Text.UTF8Encoding]($false))
+
+# Method 3: Remove all newlines entirely (join lines)
+(Get-Content script.sh) -join '' | Set-Content script.sh -NoNewline
+
+# Method 4: Remove blank lines only (keep other newlines)
+(Get-Content script.sh) | Where-Object { $_.trim() -ne '' } | Set-Content script.sh
+
 ENVIRONMENT=${1:-dev}
 INTERFACE=$(ls /sys/class/net/ | grep -v lo | head -1)
 #INTERFACE=$(ip -o link show | awk 'NR++2 {print $2}' | sed 's/://') # Specifically skip lo interface
