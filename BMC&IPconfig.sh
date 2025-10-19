@@ -159,4 +159,3 @@ elif [[ $LAN_IP == 172.16.*.* || $LAN_IP == 172.17.*.* || $LAN_IP == 172.18.*.* 
 elif [[ $LAN_IP == 192.168.*.* ]]; then
     echo "Network configuration complete for subnet /$CIDR"
 fi
-fi
