@@ -1,3 +1,5 @@
+#!/bin/bash
+
 ENVIRONMENT=${1:-dev}
 INTERFACE=$(ls /sys/class/net/ | grep -v lo | head -1)
 #INTERFACE=$(ip -o link show | awk 'NR++2 {print $2}' | sed 's/://') # Specifically skip lo interface
@@ -48,7 +50,7 @@ sudo modprobe ipmi_devintf
 sudo modprobe ipmi_si
 
 # Set BMC login Credentials
-sudo ipmitool user set 1 $USERNAME
+sudo ipmitool user set name 1 $USERNAME
 sudo ipmitool user set password 1
 sudo ipmitool user enable 1
 sudo ipmitool user list 1
@@ -67,7 +69,7 @@ read -p "Would you like to configure the local area network interface? (y/n): " 
 
 if [[ $AUTO_YAML == "y" ]]; then
     #Create netplan configuration file (Ubuntu Server Only)
-    sudo touch ~/00-aabash.yaml
+    touch ~/00-aabash.yaml
 
     echo "network:" > ~/00-aabash.yaml
     echo "  ethernets:" >> ~/00-aabash.yaml
@@ -105,14 +107,13 @@ if [[ $AUTO_YAML == "y" ]]; then
         echo "Current network interfaces: "
         ip a
         echo "Check the network configuration in /etc/netplan/ directory." 
-        echo "(Hint) use ethtool -p "interface name" 30 to find the interfaces physical location"
+        echo "(Hint) use ethtool -p \"interface name\" 30 to find the interfaces physical location"
         read -p "Press Enter to continue"
         exit 1
     fi
 else
     echo "Netplan configuration skipped. "
     echo "Note: You may need to manually configure settings in /etc/netplan/"
-
 fi
 
 read -p "Would you like to view the YAML configuration? (y/n): " VIEW_YAML
@@ -129,15 +130,17 @@ else
     echo "Skipping .yaml display"
 fi
 
-echo "export http_proxy="http://proxy-site.company.com:port" >> ~/.bashrc
-echo "export https_proxy="https://proxy-site.company.com:port" >> ~/.bashrc
-echo "export no_proxy=localhost,127.0.0.1"' >> ~/.bashrc
+echo 'export http_proxy="http://proxy-site.company.com:port"' >> ~/.bashrc
+echo 'export https_proxy="https://proxy-site.company.com:port"' >> ~/.bashrc
+echo 'export no_proxy=localhost,127.0.0.1' >> ~/.bashrc
 source ~/.bashrc
 
 #View the new proxy settings. 
 env | grep -i proxy
-read -p "Running client node setup (Press ENTER)."
-read -p "Enter Date: (YYYY-MM-DD HH:MM)" datetime
+read -p "Press Enter to continue"
+
+read -p "Running client node setup (Press ENTER). "
+read -p "Enter Date: (YYYY-MM-DD HH:MM) " datetime
 sudo date -s "$datetime"
 sudo timedatectl set-ntp true
 date
@@ -155,4 +158,5 @@ elif [[ $LAN_IP == 172.16.*.* || $LAN_IP == 172.17.*.* || $LAN_IP == 172.18.*.* 
     echo "Network configuration complete for subnet /$CIDR"
 elif [[ $LAN_IP == 192.168.*.* ]]; then
     echo "Network configuration complete for subnet /$CIDR"
+fi
 fi
